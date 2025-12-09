@@ -20,16 +20,17 @@ class ConvNet(nn.Module):
             nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(num_features=64),
             nn.ReLU(),
-            nn.AdaptiveMaxPool2d((32, 32))
+            nn.AdaptiveAvgPool2d((32, 32))
         )
         self.layer4 = nn.Sequential(
             nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(num_features=128),
             nn.ReLU(),
-            nn.AdaptiveMaxPool2d((16, 16))
+            nn.AdaptiveAvgPool2d((16, 16))
         )
         self.layer5 = nn.Sequential(
-            nn.Flatten()
+            nn.Flatten(),
+            nn.Linear(in_features=128 * 16 * 16, out_features=512)
         )
 
     def forward(self, x):
