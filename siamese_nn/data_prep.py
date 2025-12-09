@@ -9,6 +9,7 @@ import numpy as np
 def dataset_and_split(x, y):
     x = torch.tensor(np.array(x)) # list --> numpy --> torch is faster than list --> torch
     y = torch.tensor(np.array(y))
+    y = y.unsqueeze(dim=1)  # (5000) --> (5000,1)
     dataset = TensorDataset(x, y)
     train, validation, test = random_split(dataset, [3500, 1000, 500])
     return train, validation, test
