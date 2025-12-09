@@ -1,5 +1,6 @@
 from torch import nn
 from model import ConvNet
+from torch.nn.functional import softmax
 from torch import optim
 from data_prep import train_loader, valid_loader
 import torch
@@ -18,7 +19,8 @@ for epoch in range(epoch):
         img2 = images[:, 1, :, :, :]
         output1 = Net(img1)
         output2 = Net(img2)
-        outputs = torch.norm(output1 - output2, p=2, dim=1, keepdim=True) # Euclidean distance
+        outputs = torch.norm(output1 - output2, p=2, dim=1, keepdim=True)  # Euclidean distance
+        outputs = softmax(outputs, dim=1)
         loss = loss_fn(outputs, labels)
         loss_value.append(loss.item())
         print(f"epoch:{epoch}, loss:{loss.item()} ")
