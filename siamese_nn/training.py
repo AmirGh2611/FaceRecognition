@@ -18,8 +18,8 @@ for epoch in range(epoch):
         img2 = images[:, 1, :, :, :]
         output1 = Net(img1)
         output2 = Net(img2)
-        outputs = torch.norm(output1 - output2, p=2, dim=1, keepdim=True)  # Euclidean distance
-        outputs = Net.layer6(outputs)
+        euclidean_distance = torch.norm(output1 - output2, p=2, dim=1, keepdim=True)  # Euclidean distance
+        outputs = Net.layer6(euclidean_distance)
         loss = loss_fn(outputs, labels)
         loss_value.append(loss.item())
         print(f"epoch:{epoch}, loss:{loss.item()} ")
